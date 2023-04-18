@@ -129,8 +129,21 @@ module ActiveAdmin
       #
       # @return [ActiveRecord::Base] An un-saved active record base object
       def build_new_resource
-        parameters = (resource_params.map { |params| params.slice(active_admin_config.resource_class.inheritance_column) })
+        source_params = (resource_params.map { |params| params.slice(active_admin_config.resource_class.inheritance_column) }) 
+        
         Rails.logger.debug(method: 'build_new_resource', method_for_build: method_for_build, parameters:  parameters)
+
+        if source_params.respond_to?(:each_pair)
+          parameters = source_params
+          Rails.logger.debug(method: 'build_new_resource', message: 'Parameters are a hash, accepting as is.')
+        elsif source_params.respond_to?(:each)
+          parameters = {}
+          source_params.each do |param|
+            parameters = parameters.merge(param)
+          end
+          Rails.logger.debug(method: 'build_new_resource', message: 'Parameters were an array, merged together in a single hash.', parameters: parameters)
+        end
+
         apply_authorization_scope(scoped_collection).send(
           method_for_build,
           parameters
