@@ -143,11 +143,10 @@ module ActiveAdmin
           Rails.logger.debug(method: 'build_new_resource', message: 'Parameters were an array, merged together in a single hash.', parameters: parameters)
         end        
         
-        
         Rails.logger.debug(
           method: 'build_new_resource', 
           method_for_build: method_for_build, 
-          source_parameters: source_params
+          source_parameters: source_params,
           output_parameters: parameters
         )
 
