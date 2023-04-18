@@ -129,7 +129,7 @@ module ActiveAdmin
       #
       # @return [ActiveRecord::Base] An un-saved active record base object
       def build_new_resource
-        parameters = *resource_params.map { |params| params.slice(active_admin_config.resource_class.inheritance_column) }
+        parameters = (resource_params.map { |params| params.slice(active_admin_config.resource_class.inheritance_column) })
         apply_authorization_scope(scoped_collection).send(
           method_for_build,
           {parameters}
