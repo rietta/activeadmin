@@ -131,7 +131,6 @@ module ActiveAdmin
       def build_new_resource
         source_params = (resource_params.map { |params| params.slice(active_admin_config.resource_class.inheritance_column) }) 
         
-        Rails.logger.debug(method: 'build_new_resource', method_for_build: method_for_build, parameters:  parameters)
 
         if source_params.respond_to?(:each_pair)
           parameters = source_params
@@ -142,7 +141,16 @@ module ActiveAdmin
             parameters = parameters.merge(param)
           end
           Rails.logger.debug(method: 'build_new_resource', message: 'Parameters were an array, merged together in a single hash.', parameters: parameters)
-        end
+        end        
+        
+        
+        Rails.logger.debug(
+          method: 'build_new_resource', 
+          method_for_build: method_for_build, 
+          source_parameters: source_params
+          output_parameters: parameters
+        )
+
 
         apply_authorization_scope(scoped_collection).send(
           method_for_build,
