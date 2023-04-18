@@ -324,13 +324,13 @@ module ActiveAdmin
           source_params = attributes
           if source_params.respond_to?(:each_pair)
             attributes = source_params
-            Rails.logger.debug(method: 'assign_attributes', message: 'Parameters are a hash, accepting as is.')
+            Rails.logger.debug(method: 'assign_attributes', message: 'attributes are a hash, accepting as is.')
           elsif source_params.respond_to?(:each)
             attributes = {}
             source_params.each do |param|
               attributes = attributes.merge(param)
             end
-          Rails.logger.debug(method: 'assign_attributes', message: 'Parameters were an array, merged together in a single hash.', parameters: parameters)
+          Rails.logger.debug(method: 'assign_attributes', message: 'attributes were an array, merged together in a single hash.', attributes: attributes)
         end        
 
           resource.assign_attributes(attributes)
