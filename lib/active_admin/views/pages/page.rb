@@ -21,8 +21,10 @@ module ActiveAdmin
         def title
           if page_presenter[:title]
             render_or_call_method_or_proc_on self, page_presenter[:title]
-          else
+          elsif active_admin_config.respond_to?(:name)
             active_admin_config.name
+          else 
+            'Untitled'
           end
         end
       end
