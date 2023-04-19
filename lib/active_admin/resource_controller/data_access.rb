@@ -320,7 +320,6 @@ module ActiveAdmin
       #
       def assign_attributes(resource, attributes)
         if resource.respond_to?(:assign_attributes)
-
           source_params = attributes
           if source_params.respond_to?(:each_pair)
             attributes = source_params
@@ -330,8 +329,8 @@ module ActiveAdmin
             source_params.each do |param|
               attributes = attributes.merge(param)
             end
-          Rails.logger.debug(method: 'assign_attributes', message: 'attributes were an array, merged together in a single hash.', attributes: attributes)
-        end        
+            Rails.logger.debug(method: 'assign_attributes', message: 'attributes were an array, merged together in a single hash.', attributes: attributes)
+          end
 
           resource.assign_attributes(attributes)
         else
